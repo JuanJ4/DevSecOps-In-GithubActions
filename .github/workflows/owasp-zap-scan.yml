@@ -4,7 +4,7 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Run unit tests and SAST scan on the source code 
+    name: Run unit tests and SAST scan on the source code with SonarQube
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 11
@@ -14,14 +14,14 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven cloud
-      run:  mvn -B verify sonar:sonar -Dsonar.projectKey=javaprojectreachability -Dsonar.organization=javaprojectreachability -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
+      run:  mvn -B verify sonar:sonar -Dsonar.projectKey=thejavareachability -Dsonar.organization=thejavareachability -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   security:
     runs-on: ubuntu-latest
     needs: build
-    name: Run the SCA scan on the source code
+    name: Run the SCA scan on the source code Using Snyk
     steps:
       - uses: actions/checkout@master
       - name: RunSnyk to check for vulnerabilities
@@ -32,7 +32,7 @@ jobs:
   zap_scan:
     runs-on: ubuntu-latest
     needs: security
-    name: Run DAST scan on the web application
+    name: Run DAST scan on the web application using OWASP Zap
     steps:
       - name: Checkout
         uses: actions/checkout@v2
