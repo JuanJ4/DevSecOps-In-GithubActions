@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_DevSecOps_In_GithubActions_1699950433629-pr-trigger-input-set
+  identifier: Build_DevSecOps_In_GithubActions_1699950433629prtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: default_project
+  pipeline:
+    identifier: Build_DevSecOps_In_GithubActions_1699950433629
+    properties:
+      ci:
+        codebase:
+          build:
+            type: PR
+            spec:
+              number: <+trigger.prNumber>
